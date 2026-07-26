@@ -1,0 +1,21 @@
+<svg width="680" height="210" viewBox="0 0 680 210" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Vendalix logo</title>
+  <desc>V and X monogram centered above the Vendalix wordmark</desc>
+
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&amp;display=swap');
+      .vx-text { fill: #1e1b4b; font-family: 'Poppins', sans-serif; font-weight: 700; }
+      .vx-mark { stroke: #1e1b4b; }
+      .vx-accent { stroke: #14b8a6; }
+    </style>
+  </defs>
+
+  <g transform="translate(280, 10) scale(0.55)" fill="none" stroke-width="18" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 0 0 L 80 140" class="vx-mark"/>
+    <path d="M 160 0 L 80 140" class="vx-mark"/>
+    <path d="M 60 0 L 140 140" class="vx-accent"/>
+  </g>
+
+  <text x="340" y="155" font-size="46" class="vx-text" text-anchor="middle">Vendalix</text>
+</svg>
