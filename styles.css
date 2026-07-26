@@ -18,13 +18,13 @@
   box-sizing: border-box;
 }
 
-html,
-body {
-  height: 100%;
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
+  min-height: 100%;
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 1.125rem;
@@ -87,16 +87,18 @@ body {
   animation: orb-float 20s ease-in-out infinite reverse;
 }
 
-.stage {
+.page {
   position: relative;
   z-index: 1;
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: clamp(2rem, 6vw, 4.5rem);
-  max-width: 42rem;
+  width: min(100% - 2rem, 58rem);
   margin: 0 auto;
+  padding: clamp(2rem, 6vw, 4.5rem) 0 clamp(3rem, 8vw, 5rem);
+}
+
+.hero {
+  max-width: 38rem;
+  padding-top: clamp(1rem, 4vh, 3rem);
+  padding-bottom: clamp(2rem, 5vw, 3.25rem);
 }
 
 .status {
@@ -152,7 +154,7 @@ body {
 
 .lede {
   margin: 0.75rem 0 0;
-  max-width: 34ch;
+  max-width: 38ch;
   color: var(--ink-soft);
   font-size: clamp(1.05rem, 2.4vw, 1.2rem);
   font-weight: 400;
@@ -168,25 +170,118 @@ body {
 .rule {
   width: 0;
   height: 2px;
-  margin: 2rem 0 1.25rem;
+  margin: 1.75rem 0 0;
   background: linear-gradient(90deg, var(--teal-bright), var(--sand));
   animation: draw-rule 1s cubic-bezier(0.22, 1, 0.36, 1) 0.55s forwards;
 }
 
-.aside {
-  margin: 0;
-  color: var(--ink-soft);
-  font-size: 0.95rem;
-  font-weight: 500;
+.projects {
   opacity: 0;
-  animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.7s forwards;
+  animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.55s forwards;
+}
+
+.projects__title {
+  margin: 0;
+  font-family: var(--font-logo);
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.projects__intro {
+  margin: 0.4rem 0 0;
+  color: var(--ink-soft);
+  font-size: 1rem;
+}
+
+.project-grid {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+.project {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  border-radius: 0;
+  outline-offset: 4px;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project__media {
+  overflow: hidden;
+}
+
+a.project:hover,
+a.project:focus-visible {
+  transform: translateY(-4px);
+}
+
+a.project:hover .project__image,
+a.project:focus-visible .project__image {
+  transform: scale(1.03);
+}
+
+a.project:hover .project__meta,
+a.project:focus-visible .project__meta {
+  color: var(--teal);
+}
+
+.project--soon {
+  cursor: default;
+  opacity: 0.88;
+}
+
+.project__image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: #dfe8e5;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project__body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.35rem 1rem;
+  margin-top: 0.7rem;
+}
+
+.project__name {
+  margin: 0;
+  font-family: var(--font-logo);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.project__meta {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  transition: color 0.25s ease;
+}
+
+.project--soon .project__meta {
+  color: var(--teal);
 }
 
 .legal {
   margin: 3.5rem 0 0;
   max-width: 46ch;
   opacity: 0;
-  animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.85s forwards;
+  animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.75s forwards;
 }
 
 .legal p {
@@ -255,6 +350,10 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   .atmosphere__grid,
   .atmosphere__orb,
   .status,
@@ -262,7 +361,7 @@ body {
   .brand,
   .lede,
   .rule,
-  .aside,
+  .projects,
   .legal {
     animation: none;
   }
@@ -270,7 +369,7 @@ body {
   .status,
   .brand,
   .lede,
-  .aside,
+  .projects,
   .legal {
     opacity: 1;
   }
@@ -278,18 +377,33 @@ body {
   .rule {
     width: 4.5rem;
   }
+
+  a.project,
+  .project__image,
+  .project__meta {
+    transition: none;
+  }
+
+  a.project:hover,
+  a.project:focus-visible {
+    transform: none;
+  }
+
+  a.project:hover .project__image,
+  a.project:focus-visible .project__image {
+    transform: none;
+  }
+}
+
+@media (min-width: 640px) {
+  .project-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem 1.35rem;
+  }
 }
 
 @media (min-width: 720px) {
-  .stage {
-    max-width: 46rem;
-  }
-
   .brand-logo {
     width: min(100%, 26rem);
-  }
-
-  .lede {
-    max-width: 38ch;
   }
 }
